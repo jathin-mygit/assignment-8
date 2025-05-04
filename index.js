@@ -5,9 +5,10 @@ app.set("view engine", "ejs")
 app.use(express.urlencoded({extended : true}))
 app.use(express.static("public"))
 const port = 4000
+const uri = "mongodb+srv://fakeaddress2202:fakeaddres@tasks.d8jyvby.mongodb.net/?retryWrites=true&w=majority&appName=tasks"
 
 const mongoose = require("mongoose")
-mongoose.connect("mongodb://localhost:27017/todo")
+mongoose.connect(uri)
 
 const trySchema = new mongoose.Schema({
     name : String
