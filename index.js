@@ -5,7 +5,7 @@ app.set("view engine", "ejs")
 app.use(express.urlencoded({extended : true}))
 app.use(express.static("public"))
 const port = 4000
-const uri = "mongodb+srv://fakeaddress2202:fakeaddres@tasks.d8jyvby.mongodb.net/?retryWrites=true&w=majority&appName=tasks"
+const uri = "mongodb+srv://fakeaddress2202:vF7cKDZz8GKUpPi9@tasks.d8jyvby.mongodb.net/?retryWrites=true&w=majority&appName=tasks"
 
 const mongoose = require("mongoose")
 mongoose.connect(uri)
