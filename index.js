@@ -60,6 +60,20 @@ app.post('/delete', async function(req, res){
     res.redirect('/');
 });
 
+// Add route to handle editing tasks
+app.post('/edit', async function(req, res){
+    const taskId = req.body.taskId;
+    const updatedTaskName = req.body.taskName;
+    
+    try {
+        await item.findByIdAndUpdate(taskId, { name: updatedTaskName });
+        console.log(`Task updated: ${taskId} - ${updatedTaskName}`);
+    } catch (err) {
+        console.error("Error updating task:", err);
+    }
+    res.redirect('/');
+});
+
 app.listen(port, function(){
     console.log(`http://localhost:${port}`)
 })
