@@ -19,6 +19,18 @@
             width: auto;
             font-size: 14px;
         }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            min-height: 30px;
+            width: auto;
+            font-size: 14px;
+        }
         .edit-modal {
             display: none;
             position: fixed;
@@ -60,6 +72,9 @@
         .cancel-btn {
             background-color: #e67e7e;
         }
+        .action-buttons {
+            display: flex;
+        }
     </style>
 </head>
 
@@ -70,11 +85,17 @@
     <div class="box">
         <% ejex.forEach(function(item){%>
             <div class="item">
-                <form action="/delete" method="post" style="display: inline-flex; align-items: center;">
+                <form action="/delete" method="post" style="display: inline-flex; align-items: center; flex: 1;">
                     <input type="checkbox" name="checkbox1" value="<%= item._id%>" onchange="this.form.submit()">
                     <p><%= item.name %></p>
                 </form>
-                <button class="edit-btn" onclick="openEditModal('<%= item._id %>', '<%= item.name %>')">Edit</button>
+                <div class="action-buttons">
+                    <button class="edit-btn" onclick="openEditModal('<%= item._id %>', '<%= item.name %>')">Edit</button>
+                    <form action="/delete" method="post" style="display: inline;">
+                        <input type="hidden" name="checkbox1" value="<%= item._id%>">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </div>
             </div>
         <%})%>
     <form action="/" method="POST">
