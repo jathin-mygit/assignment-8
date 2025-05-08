@@ -1,9 +1,12 @@
 const express = require("express")
 const bodyParser = require("body-parser")
+const methodOverride = require("method-override")
 const app = express()
 app.set("view engine", "ejs")
 app.use(express.urlencoded({extended : true}))
 app.use(express.static("public"))
+// Setup method-override middleware
+app.use(methodOverride("_method"))
 const port = 4000
 const uri = "mongodb+srv://fakeaddress2202:vF7cKDZz8GKUpPi9@tasks.d8jyvby.mongodb.net/?retryWrites=true&w=majority&appName=tasks"
 
@@ -50,6 +53,18 @@ app.post('/', function(req, res){
     res.redirect('/')
 })
 
+app.delete('/tasks/:id', async function(req, res){
+    const taskId = req.params.id;
+    try {
+        await item.findByIdAndDelete(taskId);
+        console.log(`Task deleted: ${taskId}`);
+    } catch (err) {
+        console.error("Error deleting task:", err);
+    }
+    res.redirect('/');
+});
+
+// Keep the old route for compatibility
 app.post('/delete', async function(req, res){
     const checked = req.body.checkbox1;
     try {
@@ -60,7 +75,21 @@ app.post('/delete', async function(req, res){
     res.redirect('/');
 });
 
-// Add route to handle editing tasks
+// Updated route to handle editing tasks using PUT method
+app.put('/tasks/:id', async function(req, res){
+    const taskId = req.params.id;
+    const updatedTaskName = req.body.taskName;
+    
+    try {
+        await item.findByIdAndUpdate(taskId, { name: updatedTaskName });
+        console.log(`Task updated: ${taskId} - ${updatedTaskName}`);
+    } catch (err) {
+        console.error("Error updating task:", err);
+    }
+    res.redirect('/');
+});
+
+// Keep the old route for compatibility
 app.post('/edit', async function(req, res){
     const taskId = req.body.taskId;
     const updatedTaskName = req.body.taskName;

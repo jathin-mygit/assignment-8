@@ -91,8 +91,7 @@
                 </form>
                 <div class="action-buttons">
                     <button class="edit-btn" onclick="openEditModal('<%= item._id %>', '<%= item.name %>')">Edit</button>
-                    <form action="/delete" method="post" style="display: inline;">
-                        <input type="hidden" name="checkbox1" value="<%= item._id%>">
+                    <form action="/tasks/<%= item._id%>?_method=DELETE" method="POST" style="display: inline;">
                         <button type="submit" class="delete-btn">Delete</button>
                     </form>
                 </div>
@@ -108,7 +107,7 @@
     <div id="editModal" class="edit-modal">
         <div class="modal-content">
             <h2>Edit Task</h2>
-            <form action="/edit" method="POST">
+            <form id="editForm" method="POST">
                 <input type="hidden" id="taskId" name="taskId" value="">
                 <input type="text" id="taskName" name="taskName" placeholder="Edit task" style="width: 100%; margin-bottom: 15px;">
                 <div class="modal-buttons">
@@ -124,6 +123,8 @@
             document.getElementById('editModal').style.display = 'block';
             document.getElementById('taskId').value = id;
             document.getElementById('taskName').value = name;
+            // Set the form action with PUT method
+            document.getElementById('editForm').action = `/tasks/${id}?_method=PUT`;
         }
 
         function closeEditModal() {
