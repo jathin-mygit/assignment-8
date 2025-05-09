@@ -46,10 +46,15 @@ app.get('/', async function(req, res){
 
 app.post('/', function(req, res){
     const itemName = req.body.ele1
-    const todo4 = new item({
-        name : itemName
-    })  
-    todo4.save()
+    
+    // Check if the todo is empty or just whitespace
+    if(itemName && itemName.trim() !== '') {
+        const todo4 = new item({
+            name : itemName
+        })  
+        todo4.save()
+    }
+    
     res.redirect('/')
 })
 
